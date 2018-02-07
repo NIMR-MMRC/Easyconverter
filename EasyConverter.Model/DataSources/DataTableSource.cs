@@ -12,12 +12,15 @@ namespace EasyConverter.Model.DataSources
         private System.Data.DataTable dataTable;
         public string GetDataLabel()
         {
-            throw new NotImplementedException();
+            return string.Empty;
         }
-
+        private byte GetNumType(double x)
+        {
+            return (byte)255;
+        }
         public ProtoData GetDataTypes()
         {
-            double num;
+            double num=0;
             ProtoData protoDatum = new ProtoData()
             {
                 obs = 0
@@ -30,55 +33,38 @@ namespace EasyConverter.Model.DataSources
             protoDatum.map = new byte[protoDatum.nvar];
 
 
-            foreach(System.Data.DataColumn dc in dataTable.Columns)
+            foreach(System.Data.DataRow dr in dataTable.Rows)
             {
-                if(dc.DataType ==typeof(int))
+                foreach(System.Data.DataColumn dc in dataTable.Columns)
                 {
-                    byte numType = this.GetNumType(num);
-                    if (numType > protoDatum.map[i])
+                    var i = dataTable.Columns.IndexOf(dc);
+                    var str2 =  dr[dc];
+                    if (StataMissings.IsMissingValue(str2) || double.TryParse(str2.ToString(), out num)  )
                     {
-                        protoDatum.map[i] = numType;
-                    }
-
-                }
-
-            }
-            while (true)
-            {
-                string str = streamReader.ReadLine();
-                string str1 = str;
-                if (str == null)
-                {
-                    break;
-                }
-                string[] strArrays = str1.Split(new char[] { '\t' });
-                for (int i = 0; i < (int)protoDatum.map.Length; i++)
-                {
-                    string str2 = strArrays[i];
-                    if (double.TryParse(str2, out num) || StataMissings.IsMissingValue(str2))
-                    {
-                        //byte numType = this.GetNumType(num);
-                        //if (numType > protoDatum.map[i])
-                        //{
-                        //    protoDatum.map[i] = numType;
-                        //}
+                        byte numType = this.GetNumType(num);
+                        if (numType > protoDatum.map[i])
+                        {
+                           protoDatum.map[i] = numType;
+                        }
                     }
                     else
                     {
-                        if (str2.Length > 244)
+                        var str3 = str2.ToString();
+                        if (str3.Length > 244)
                         {
-                            str2 = str2.Substring(1, 244);
+                            str3 = str3.Substring(1, 244);
                         }
-                        if (str2.Length > protoDatum.map[i])
+                        if (str3.Length > protoDatum.map[i])
                         {
-                            protoDatum.map[i] = Convert.ToByte(str2.Length);
+                            protoDatum.map[i] = Convert.ToByte(str3.Length);
                         }
                     }
                 }
                 ProtoData protoDatum1 = protoDatum;
                 protoDatum1.obs = protoDatum1.obs + 1;
+
             }
-            streamReader.Close();
+            
             for (int j = 0; j < protoDatum.nvar; j++)
             {
                 if (protoDatum.map[j] == 0)
@@ -91,12 +77,18 @@ namespace EasyConverter.Model.DataSources
 
         public Dictionary<string, vlabs> GetValueLabels()
         {
-            throw new NotImplementedException();
+            return new Dictionary<string, vlabs>();
         }
 
         public Dictionary<string, string> GetVarLabels()
         {
-            throw new NotImplementedException();
+            var dict = new Dictionary<string, string>();
+           foreach(System.Data.DataColumn t in dataTable.Columns)
+
+            {
+                dict.Add(t.ColumnName, t.ColumnName);
+            }
+            return dict;
         }
 
         public string[] GetVarnames()
@@ -106,7 +98,7 @@ namespace EasyConverter.Model.DataSources
 
         public Dictionary<string, string> GetVarVal()
         {
-            throw new NotImplementedException();
+            return new Dictionary<string, string>();
         }
     }
 }

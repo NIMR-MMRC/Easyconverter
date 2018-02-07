@@ -50,13 +50,13 @@ namespace EasyConverter.Model
             return this._miss[dotValue];
         }
 
-        public static bool IsMissingValue(string value)
+        public static bool IsMissingValue(object value)
         {
-            if (value == "." || value == ".a" || value == ".b" || value == ".c" || value == ".d" || value == ".e" || value == ".f" || value == ".g" || value == ".h" || value == ".i" || value == ".j" || value == ".k" || value == ".l" || value == ".m" || value == ".n" || value == ".o" || value == ".p" || value == ".q" || value == ".r" || value == ".s" || value == ".t" || value == ".u" || value == ".v" || value == ".w" || value == ".x" || value == ".y")
+            if (value ==null||System.DBNull.Value.Equals(value) ||value.ToString() == "." || value.ToString() == ".a" || value.ToString() == ".b" || value.ToString() == ".c" || value == ".d" || value == ".e" || value == ".f" || value == ".g" || value == ".h" || value == ".i" || value == ".j" || value == ".k" || value == ".l" || value == ".m" || value == ".n" || value == ".o" || value == ".p" || value == ".q" || value == ".r" || value == ".s" || value == ".t" || value == ".u" || value == ".v" || value == ".w" || value == ".x" || value == ".y")
             {
                 return true;
             }
-            return value == ".z";
+            return value.ToString() == ".z";
         }
     }
 }

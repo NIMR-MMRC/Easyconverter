@@ -185,10 +185,7 @@ namespace EasyConverter.Model
 
       
 
-        private byte GetNumType(double x)
-        {
-            return (byte)255;
-        }
+       
 
         private static string GetSchemaName(string line)
         {
