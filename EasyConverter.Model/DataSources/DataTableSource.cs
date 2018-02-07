@@ -8,8 +8,12 @@ namespace EasyConverter.Model.DataSources
     public class DataTableSource : IDataSource
     {
 
+        public DataTableSource (System.Data.DataTable DataTable )
+        {
+            this.dataTable = DataTable;
+        }
 
-        private System.Data.DataTable dataTable;
+        private System.Data.DataTable dataTable=null;
         public string GetDataLabel()
         {
             return string.Empty;
