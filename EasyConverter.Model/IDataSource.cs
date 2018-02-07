@@ -6,6 +6,9 @@ namespace EasyConverter.Model
 {
 public    interface IDataSource
     {
+
+        System.Data.DataTable Data
+        { get; }
         Dictionary<string, string> GetVarLabels();
         string[] GetVarnames();
         Dictionary<string, string> GetVarVal();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Text;
 
@@ -155,6 +156,9 @@ namespace EasyConverter.Model.DataSources
             return strs;
         }
         TextReader reader;
+
+        public DataTable Data => throw new NotImplementedException();
+
         public string[] GetVarnames()
         {
             return reader.ReadLine().Split(new char[] { '\t' });

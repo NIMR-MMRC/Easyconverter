@@ -106,27 +106,37 @@ namespace EasyConverter.Model
             binaryWriter.Write(new byte[5]);
             addMessage("  Writing data");
             StataMissings stataMissing = new StataMissings();
-            StreamReader streamReader = new StreamReader("tabFileName");
-            streamReader.ReadLine();
-            Label0:
-            string str7 = streamReader.ReadLine();
-            string str8 = str7;
-            if (str7 == null)
+            //StreamReader streamReader = new StreamReader("tabFileName");
+            //streamReader.ReadLine();
+            //Label0:
+            //string str7 = streamReader.ReadLine();
+            //string str8 = str7;
+            //if (str7 == null)
+            //{
+            //    streamReader.Close();
+            //    addMessage("  Writing value labels");
+            //    foreach (vlabs value in valueLabels.Values)
+            //    {
+            //        value.WriteToFile(binaryWriter);
+            //    }
+            //    binaryWriter.Close();
+            //    addMessage("Done");
+            //    return;
+            //}
+
+
+
+            foreach(System.Data.DataRow dr in dataSource.Data.Rows)
             {
-                streamReader.Close();
-                addMessage("  Writing value labels");
-                foreach (vlabs value in valueLabels.Values)
-                {
-                    value.WriteToFile(binaryWriter);
-                }
-                binaryWriter.Close();
-                addMessage("Done");
-                return;
-            }
-            string[] strArrays = str8.Split(new char[] { '\t' });
+
+           
+
+            object[] strArrays = dr.ItemArray;
             for (int m = 0; m < (int)dataTypes.map.Length; m++)
             {
-                string str9 = strArrays[m];
+                string str9 = strArrays[m].ToString();
+                    if (DBNull.Value.Equals(strArrays[m]))
+                        str9 = ".";
                 if (str9.Length > 244)
                 {
                     str9 = str9.Substring(1, 244);
@@ -157,7 +167,18 @@ namespace EasyConverter.Model
                     }
                 }
             }
-            goto Label0;
+            }
+
+
+
+          //  streamReader.Close();
+            addMessage("  Writing value labels");
+            foreach (vlabs value in valueLabels.Values)
+            {
+                value.WriteToFile(binaryWriter);
+            }
+            binaryWriter.Close();
+            addMessage("Done");
         }
 
       

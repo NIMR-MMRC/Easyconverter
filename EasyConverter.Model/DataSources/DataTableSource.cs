@@ -13,6 +13,16 @@ namespace EasyConverter.Model.DataSources
             this.dataTable = DataTable;
         }
 
+
+     public   System.Data.DataTable Data
+        {
+            get
+            {
+                return this.dataTable;
+            }
+
+
+        }
         private System.Data.DataTable dataTable=null;
         public string GetDataLabel()
         {
