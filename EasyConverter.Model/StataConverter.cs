@@ -14,29 +14,7 @@ namespace EasyConverter.Model
         {
         }
 
-        private void CheckVarNames(string[] names)
-        {
-            string[] strArrays = names;
-            for (int i = 0; i < (int)strArrays.Length; i++)
-            {
-                string str = strArrays[i];
-                if (str.Length > 32)
-                {
-                    throw new Exception(string.Concat("Variable name too long: ", str));
-                }
-                if ("0123456789".IndexOf(str.Substring(0, 1)) >= 0)
-                {
-                    throw new Exception(string.Concat("Variable name may not start with a digit: ", str));
-                }
-                for (int j = 0; j < str.Length; j++)
-                {
-                    if ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_".IndexOf(str[j]) < 0)
-                    {
-                        throw new Exception(string.Concat("Variable name contains one or more characters that are not allowed: ", str));
-                    }
-                }
-            }
-        }
+        
 
         public void ConvertToStata(IDataSource dataSource  , string doFileName, string dtaFileName, StataConverter.AddMessageDelegate addMessage)
         {
@@ -187,54 +165,11 @@ namespace EasyConverter.Model
 
        
 
-        private static string GetSchemaName(string line)
-        {
-            char[] chrArray = new char[] { ' ' };
-            return line.Split(chrArray)[2];
-        }
+       
 
       
 
-        private static void GetValueLabels1(string line, vlabs q)
-        {
-            string empty = string.Empty;
-            line = line.Substring(13 + q.SchemaName.Length).Trim();
-            while (line.Length > 0 && line.IndexOf(Convert.ToChar(39)) >= 0)
-            {
-                int num = line.IndexOf(' ');
-                string str = line.Substring(0, num);
-                line = line.Substring(num + 1);
-                num = 0;
-                while (line[num] != '\"' || line[num + 1] != Convert.ToChar(39))
-                {
-                    num++;
-                }
-                string str1 = line.Substring(2, num - 2);
-                line = line.Substring(num + 2).Trim();
-                object[] objArray = new object[5];
-                char[] chrArray = new char[] { '\t' };
-                objArray[0] = empty.Trim(chrArray);
-                objArray[1] = '\t';
-                objArray[2] = str;
-                objArray[3] = '\t';
-                objArray[4] = str1;
-                empty = string.Concat(objArray);
-                Lbl lbl = new Lbl()
-                {
-                    Text = str1,
-                    Value = Convert.ToInt32(str)
-                };
-                Lbl lbl1 = lbl;
-                for (int i = q.lbls.Count - 1; i >= 0; i--)
-                {
-                    if (q.lbls[i].Value == lbl1.Value)
-                    {
-                        q.lbls.RemoveAt(i);
-                    }
-                }
-                q.lbls.Add(lbl1);
-            }
-        }
+      
 
        
 
