@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace EasyConverter.Model
+namespace EasyConverter.Model.DataSources
 {
     public class TabSeparatorDataSource : IDataSource
     {
