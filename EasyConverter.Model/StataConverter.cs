@@ -33,7 +33,7 @@ namespace EasyConverter.Model
             Dictionary<string, string> strs = new Dictionary<string, string>();
             Dictionary<string, vlabs> valueLabels = new Dictionary<string, vlabs>();
             Dictionary<string, string> varVal = new Dictionary<string, string>();
-            if (File.Exists(doFileName))
+            if (!string.IsNullOrWhiteSpace(doFileName) && File.Exists(doFileName))
             {
                 addMessage("  Inspecting do-file, collecting variable labels");
                 strs = dataSource.GetVarLabels();
