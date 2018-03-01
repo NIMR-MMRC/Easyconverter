@@ -40,7 +40,7 @@ namespace EasyConverter.Model.DataSources
                 obs = 0
             };
             
-            protoDatum.vnames = GetVarnames();
+            protoDatum.VariableInfos = GetVariableInformations ();
 
 
             // this.CheckVarNames(protoDatum.vnames);
@@ -63,7 +63,7 @@ namespace EasyConverter.Model.DataSources
                     }
                     else
                     {
-                        var str3 = str2.ToString();
+                        var str3 = dr[dc].ToString();
                         if (str3.Length > 244)
                         {
                             str3 = str3.Substring(1, 244);
@@ -105,9 +105,9 @@ namespace EasyConverter.Model.DataSources
             return dict;
         }
 
-        public string[] GetVarnames()
+        public VariableInfo[] GetVariableInformations()
         {
-           return (from System.Data.DataColumn f in dataTable.Columns select f.ColumnName ).ToArray() ;
+           return (from System.Data.DataColumn f in dataTable.Columns select new VariableInfo { Name = f.ColumnName } ).ToArray() ;
         }
 
         public Dictionary<string, string> GetVarVal()

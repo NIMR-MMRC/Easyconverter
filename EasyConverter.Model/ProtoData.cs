@@ -18,7 +18,7 @@ namespace EasyConverter.Model
         {
             get
             {
-                return (short)((int)this.vnames.Length);
+                return (short)((int)this.VariableInfos.Length);
             }
         }
 
@@ -28,7 +28,7 @@ namespace EasyConverter.Model
             set;
         }
 
-        public string[] vnames
+        public VariableInfo[] VariableInfos
         {
             get;
             set;

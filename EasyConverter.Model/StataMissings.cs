@@ -43,7 +43,7 @@ namespace EasyConverter.Model
 
         public byte[] GetMissingValue(string dotValue, byte type)
         {
-            if (type != 255)
+            if (type != 255 && type != 254 && type != 251)
             {
                 throw new NotImplementedException("Missing values for non-double types are not defined");
             }

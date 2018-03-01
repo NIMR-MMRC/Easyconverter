@@ -63,7 +63,7 @@ namespace EasyConverter.Model
             binaryWriter.Write(dataTypes.map);
             for (int i = 0; i < dataTypes.nvar; i++)
             {
-                string str3 = dataTypes.vnames[i];
+                string str3 = dataTypes.VariableInfos[i].Name;
                 binaryWriter.Write(encoding.GetBytes(str3));
                 binaryWriter.Write(new byte[33 - str3.Length]);
             }
@@ -76,7 +76,7 @@ namespace EasyConverter.Model
             }
             for (int k = 0; k < dataTypes.nvar; k++)
             {
-                string str5 = dataTypes.vnames[k];
+                string str5 = dataTypes.VariableInfos[k].Name;
                 if (!varVal.ContainsKey(str5))
                 {
                     binaryWriter.Write(new byte[33]);
@@ -90,7 +90,7 @@ namespace EasyConverter.Model
             }
             for (int l = 0; l < dataTypes.nvar; l++)
             {
-                string str6 = dataTypes.vnames[l];
+                string str6 = dataTypes.VariableInfos[l].Name;
                 string item1 = "";
                 if (strs.ContainsKey(str6))
                 {

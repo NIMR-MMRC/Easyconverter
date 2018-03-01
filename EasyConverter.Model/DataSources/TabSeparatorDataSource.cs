@@ -44,7 +44,7 @@ namespace EasyConverter.Model.DataSources
                     obs = 0
                 };
                 StreamReader streamReader = new StreamReader(filename);
-                protoDatum.vnames = GetVarnames();
+               // protoDatum.vnames = GetVarnames();
                // this.CheckVarNames(protoDatum.vnames);
                 protoDatum.map = new byte[protoDatum.nvar];
                 while (true)
@@ -186,6 +186,11 @@ namespace EasyConverter.Model.DataSources
             }
             streamReader.Close();
             return strs;
+        }
+
+        public VariableInfo[] GetVariableInformations()
+        {
+            throw new NotImplementedException();
         }
     }
 }

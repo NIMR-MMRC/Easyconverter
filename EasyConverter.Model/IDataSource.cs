@@ -10,7 +10,7 @@ public    interface IDataSource
         System.Data.DataTable Data
         { get; }
         Dictionary<string, string> GetVarLabels();
-        string[] GetVarnames();
+        VariableInfo[] GetVariableInformations();
         Dictionary<string, string> GetVarVal();
 
         ProtoData GetDataTypes();
