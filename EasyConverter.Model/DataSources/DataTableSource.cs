@@ -7,6 +7,14 @@ namespace EasyConverter.Model.DataSources
 {
     public class DataTableSource : IDataSource
     {
+        public static int PrecisionOf(decimal d)
+        {
+            var text = d.ToString(System.Globalization.CultureInfo.InvariantCulture).TrimEnd('0');
+            var decpoint = text.IndexOf('.');
+            if (decpoint < 0)
+                return 0;
+            return text.Length - decpoint - 1;
+        }
 
         public DataTableSource (System.Data.DataTable DataTable )
         {
@@ -52,9 +60,14 @@ namespace EasyConverter.Model.DataSources
                 foreach(System.Data.DataColumn dc in dataTable.Columns)
                 {
                     var i = dataTable.Columns.IndexOf(dc);
+                    var info = protoDatum.VariableInfos[i];
                     var str2 =  dr[dc];
                     if (StataMissings.IsMissingValue(str2) || double.TryParse(str2.ToString(), out num)  )
                     {
+
+                        var decimals = PrecisionOf((decimal)(num));
+                        if (decimals > info.Decimals)
+                            info.Decimals = decimals;
                         byte numType = this.GetNumType(num);
                         if (numType > protoDatum.map[i])
                         {
@@ -64,6 +77,8 @@ namespace EasyConverter.Model.DataSources
                     else
                     {
                         var str3 = dr[dc].ToString();
+                        if(str3.Length > info.Length)
+                        info.Length = str3.Length;
                         if (str3.Length > 244)
                         {
                             str3 = str3.Substring(1, 244);

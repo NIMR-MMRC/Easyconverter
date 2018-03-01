@@ -70,7 +70,8 @@ namespace EasyConverter.Model
             binaryWriter.Write(new byte[2 * (dataTypes.nvar + 1)]);
             for (int j = 0; j < dataTypes.nvar; j++)
             {
-                string str4 = (dataTypes.map[j] <= 244 ? "%9s" : "%6.2f");
+                var info = dataTypes.VariableInfos[j];
+                string str4 = (dataTypes.map[j] <= 244 ? "%9s" : "%6." + info.Decimals.ToString() +"f");
                 binaryWriter.Write(encoding.GetBytes(str4));
                 binaryWriter.Write(new byte[12 - str4.Length]);
             }

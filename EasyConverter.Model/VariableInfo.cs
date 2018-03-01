@@ -11,5 +11,8 @@ namespace EasyConverter.Model
 
 
         public int Length { get; set; }
+
+
+        public int Decimals { get; set; }
     }
 }
