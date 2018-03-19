@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Linq;
 
 namespace EasyConverter.Model
 {
@@ -72,6 +73,11 @@ namespace EasyConverter.Model
             {
                 var info = dataTypes.VariableInfos[j];
                 string str4 = (dataTypes.map[j] <= 244 ? "%9s" : "%6." + info.Decimals.ToString() +"f");
+
+                if (info.isDate)
+                    str4 = "%td";
+                if (info.IsTime)
+                    str4 = "%tc";
                 binaryWriter.Write(encoding.GetBytes(str4));
                 binaryWriter.Write(new byte[12 - str4.Length]);
             }
@@ -135,6 +141,7 @@ namespace EasyConverter.Model
             object[] strArrays = dr.ItemArray;
             for (int m = 0; m < (int)dataTypes.map.Length; m++)
             {
+                    var dc = dataSource.Data.Columns[m];
                 string str9 = strArrays[m].ToString();
                     if (DBNull.Value.Equals(strArrays[m]))
                         str9 = ".";
@@ -144,7 +151,53 @@ namespace EasyConverter.Model
                 }
                 if (dataTypes.map[m] > 244)
                 {
-                    if (str9 == "")
+                        if(!DBNull.Value.Equals(strArrays[m]))
+                        if (dataTypes.VariableInfos[m].isDate)
+                        {
+                            var date = (DateTime)strArrays[m];
+
+                            str9 = date.Subtract(new DateTime(1960, 1, 1)).Days.ToString();
+                           
+
+                        }
+                        else if(dataTypes.VariableInfos[m].IsTime)
+                        {
+                            var fi = dc.ColumnName.Substring(0, dc.ColumnName.ToLower().IndexOf("time"));
+                            try
+                            {
+                                var date_column = (from System.Data.DataColumn v in dataSource.Data.Columns where v.ColumnName.ToLower().EndsWith("date") && v.ColumnName.ToLower().StartsWith(fi.ToLower()) select v).First();
+
+                                if (date_column.DataType == typeof(DateTime) && !DBNull.Value.Equals(dr[date_column]))
+                                {
+                                    var date = (DateTime)dr[date_column];
+
+                                    var date_value = date.Subtract(new DateTime(1960, 1, 1)).TotalMilliseconds;
+
+                                        if (str9.Length == 3)
+                                            str9 = "0" + str9;
+                                        var t = str9.Substring(0, 2);
+
+                                        var milliseconds = double.Parse(t)* 60 * 60 * 1000;
+
+                                        t = str9.Substring(2, 2);
+
+                                        var milliseconds2 = double.Parse(t)  * 60 * 1000;
+
+                                        str9 = (date_value + milliseconds + milliseconds2).ToString();
+                                    }
+
+                            }
+                            catch
+                            {
+
+                            }
+
+                        }
+
+
+
+
+                        if (str9 == "")
                     {
                         str9 = ".";
                     }

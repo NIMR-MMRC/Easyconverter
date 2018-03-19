@@ -14,5 +14,8 @@ namespace EasyConverter.Model
 
 
         public int Decimals { get; set; }
+
+        public bool IsTime { get; set; }
+        public bool isDate { get; set; } = false;
     }
 }

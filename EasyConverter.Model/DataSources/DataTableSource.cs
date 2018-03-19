@@ -59,11 +59,34 @@ namespace EasyConverter.Model.DataSources
             {
                 foreach(System.Data.DataColumn dc in dataTable.Columns)
                 {
+                   
+
                     var i = dataTable.Columns.IndexOf(dc);
                     var info = protoDatum.VariableInfos[i];
                     var str2 =  dr[dc];
+
+                    if (dc.DataType == typeof(DateTime) && !DBNull.Value.Equals(dr[dc]))
+                    {
+                        var date = (DateTime)dr[dc];
+
+                        str2 = date.Subtract(new DateTime(1960, 1, 1)).Days;
+                        info.isDate = true;
+
+                    }
+
+                   
                     if (StataMissings.IsMissingValue(str2) || double.TryParse(str2.ToString(), out num)  )
                     {
+
+
+                        if (dc.ColumnName.ToLower().EndsWith("time") && !DBNull.Value.Equals(dr[dc]))
+                        {
+                            info.IsTime = true;
+
+
+                        }
+
+
 
                         var decimals = PrecisionOf((decimal)(num));
                         if (decimals > info.Decimals)
