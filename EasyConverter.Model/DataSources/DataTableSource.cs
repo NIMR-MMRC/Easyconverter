@@ -132,7 +132,7 @@ namespace EasyConverter.Model.DataSources
             return new Dictionary<string, vlabs>();
         }
 
-        public Dictionary<string, string> GetVarLabels()
+        public virtual  Dictionary<string, string> GetVarLabels()
         {
             var dict = new Dictionary<string, string>();
            foreach(System.Data.DataColumn t in dataTable.Columns)
