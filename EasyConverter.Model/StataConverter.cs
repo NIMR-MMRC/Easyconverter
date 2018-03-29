@@ -21,7 +21,7 @@ namespace EasyConverter.Model
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             double num;
-            Encoding encoding = Encoding.GetEncoding(1252);
+            Encoding encoding = Encoding.GetEncoding(DefaultCodePage);
             CultureInfo invariantCulture = CultureInfo.InvariantCulture;
             addMessage("Inspecting inputs");
             addMessage("  Inspecting data, detecting variable types");
