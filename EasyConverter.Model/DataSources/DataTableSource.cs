@@ -127,7 +127,7 @@ namespace EasyConverter.Model.DataSources
             return protoDatum;
         }
 
-        public Dictionary<string, vlabs> GetValueLabels()
+        public virtual Dictionary<string, vlabs> GetValueLabels()
         {
             return new Dictionary<string, vlabs>();
         }

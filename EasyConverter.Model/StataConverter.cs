@@ -17,7 +17,7 @@ namespace EasyConverter.Model
 
         
 
-        public void ConvertToStata(IDataSource dataSource  , string doFileName, string dtaFileName, StataConverter.AddMessageDelegate addMessage)
+        public void ConvertToStata(IDataSource dataSource  , string dtaFileName, StataConverter.AddMessageDelegate addMessage)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             double num;
