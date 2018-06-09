@@ -17,11 +17,11 @@ namespace EasyConverter.Model
 
         
 
-        public void ConvertToStata(IDataSource dataSource  , string doFileName, string dtaFileName, StataConverter.AddMessageDelegate addMessage)
+        public void ConvertToStata(IDataSource dataSource  , string dtaFileName, StataConverter.AddMessageDelegate addMessage)
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             double num;
-            Encoding encoding = Encoding.GetEncoding(1252);
+            Encoding encoding = Encoding.GetEncoding(DefaultCodePage);
             CultureInfo invariantCulture = CultureInfo.InvariantCulture;
             addMessage("Inspecting inputs");
             addMessage("  Inspecting data, detecting variable types");
@@ -34,15 +34,14 @@ namespace EasyConverter.Model
             Dictionary<string, string> strs = new Dictionary<string, string>();
             Dictionary<string, vlabs> valueLabels = new Dictionary<string, vlabs>();
             Dictionary<string, string> varVal = new Dictionary<string, string>();
-            if (!string.IsNullOrWhiteSpace(doFileName) && File.Exists(doFileName))
-            {
+           
                 addMessage("  Inspecting do-file, collecting variable labels");
                 strs = dataSource.GetVarLabels();
                 dataLabel = dataSource.GetDataLabel();
                 addMessage("  Inspecting do-file, collecting value labels");
                 valueLabels = dataSource.GetValueLabels();
                 varVal = dataSource.GetVarVal();
-            }
+            
             addMessage("Converting data to Stata dataset");
             BinaryWriter binaryWriter = new BinaryWriter(new FileStream(dtaFileName, FileMode.OpenOrCreate));
             addMessage("  Writing meta-info");

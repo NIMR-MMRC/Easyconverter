@@ -88,7 +88,7 @@ namespace EasyConverter.Model
                 for (int k = 0; k < text.Length; k++)
                 {
                     string str = text[k].ToString(CultureInfo.InvariantCulture);
-                    byte[] bytes = Encoding.GetEncoding(1252).GetBytes(str);
+                    byte[] bytes = Encoding.GetEncoding(StataConverter.DefaultCodePage).GetBytes(str);
                     this.txt[num] = bytes[0];
                     num++;
                 }
@@ -102,7 +102,7 @@ namespace EasyConverter.Model
         {
             byte[] valueLabelTable = this.ValueLabelTable;
             w.Write((int)valueLabelTable.Length);
-            Encoding encoding = Encoding.GetEncoding(1252);
+            Encoding encoding = Encoding.GetEncoding(StataConverter.DefaultCodePage);
             w.Write(encoding.GetBytes(this.SchemaName));
             if (this.SchemaName.Length < 32)
             {
