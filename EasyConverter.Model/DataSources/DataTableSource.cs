@@ -32,7 +32,7 @@ namespace EasyConverter.Model.DataSources
 
         }
         private System.Data.DataTable dataTable=null;
-        public string GetDataLabel()
+        public virtual string GetDataLabel()
         {
             return string.Empty;
         }
@@ -40,7 +40,7 @@ namespace EasyConverter.Model.DataSources
         {
             return (byte)255;
         }
-        public ProtoData GetDataTypes()
+        public virtual ProtoData GetDataTypes()
         {
             double num=0;
             ProtoData protoDatum = new ProtoData()
@@ -127,12 +127,12 @@ namespace EasyConverter.Model.DataSources
             return protoDatum;
         }
 
-        public Dictionary<string, vlabs> GetValueLabels()
+        public virtual Dictionary<string, vlabs> GetValueLabels()
         {
             return new Dictionary<string, vlabs>();
         }
 
-        public Dictionary<string, string> GetVarLabels()
+        public virtual  Dictionary<string, string> GetVarLabels()
         {
             var dict = new Dictionary<string, string>();
            foreach(System.Data.DataColumn t in dataTable.Columns)
@@ -148,7 +148,7 @@ namespace EasyConverter.Model.DataSources
            return (from System.Data.DataColumn f in dataTable.Columns select new VariableInfo { Name = f.ColumnName } ).ToArray() ;
         }
 
-        public Dictionary<string, string> GetVarVal()
+        public virtual Dictionary<string, string> GetVarVal()
         {
             return new Dictionary<string, string>();
         }
