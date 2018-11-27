@@ -54,12 +54,12 @@ namespace EasyConverter.Model.DataSources
             // this.CheckVarNames(protoDatum.vnames);
             protoDatum.map = new byte[protoDatum.nvar];
 
-
-            foreach(System.Data.DataRow dr in dataTable.Rows)
+            var string_tracker = new List<string>()
+;            foreach(System.Data.DataRow dr in dataTable.Rows)
             {
                 foreach(System.Data.DataColumn dc in dataTable.Columns)
                 {
-                   
+                  
 
                     var i = dataTable.Columns.IndexOf(dc);
                     var info = protoDatum.VariableInfos[i];
@@ -75,7 +75,7 @@ namespace EasyConverter.Model.DataSources
                     }
 
                    
-                    if (StataMissings.IsMissingValue(str2) || double.TryParse(str2.ToString(), out num)  )
+                     if (  !string_tracker.Contains(dc.ColumnName ) && (      StataMissings.IsMissingValue(str2) || double.TryParse(str2.ToString(), out num) ) )
                     {
 
 
@@ -99,6 +99,7 @@ namespace EasyConverter.Model.DataSources
                     }
                     else
                     {
+                        string_tracker.Add(dc.ColumnName);
                         var str3 = dr[dc].ToString();
                         if(str3.Length > info.Length)
                         info.Length = str3.Length;
@@ -109,6 +110,7 @@ namespace EasyConverter.Model.DataSources
                         if (str3.Length > protoDatum.map[i])
                         {
                             protoDatum.map[i] = Convert.ToByte(str3.Length);
+                            var dsfdfd =(int) protoDatum.map[i];
                         }
                     }
                 }
