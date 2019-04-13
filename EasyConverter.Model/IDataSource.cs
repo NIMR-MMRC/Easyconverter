@@ -18,6 +18,9 @@ public    interface IDataSource
         string GetDataLabel();
 
 
+        bool IsColumnText(string columnName);
+
+
         Dictionary<string, vlabs> GetValueLabels();
     }
 }

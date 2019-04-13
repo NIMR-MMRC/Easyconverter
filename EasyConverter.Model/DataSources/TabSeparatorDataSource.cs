@@ -192,5 +192,10 @@ namespace EasyConverter.Model.DataSources
         {
             throw new NotImplementedException();
         }
+
+        public bool IsColumnText(string columnName)
+        {
+            return false;
+        }
     }
 }

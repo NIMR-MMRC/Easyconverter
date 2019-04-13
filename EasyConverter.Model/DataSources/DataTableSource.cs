@@ -61,6 +61,11 @@ namespace EasyConverter.Model.DataSources
                 {
                   
 
+                    if(dc.ColumnName == "diab_drug_2_week")
+                    {
+
+                    }
+
                     var i = dataTable.Columns.IndexOf(dc);
                     var info = protoDatum.VariableInfos[i];
                     var str2 =  dr[dc];
@@ -74,8 +79,10 @@ namespace EasyConverter.Model.DataSources
 
                     }
 
+                    var istext = IsColumnText(dc.ColumnName);
+
                    
-                     if (  !string_tracker.Contains(dc.ColumnName ) && (      StataMissings.IsMissingValue(str2) || double.TryParse(str2.ToString(), out num) ) )
+                     if (!istext && (  !string_tracker.Contains(dc.ColumnName ) && (      StataMissings.IsMissingValue(str2) || double.TryParse(str2.ToString(), out num) ) ))
                     {
 
 
@@ -153,6 +160,11 @@ namespace EasyConverter.Model.DataSources
         public virtual Dictionary<string, string> GetVarVal()
         {
             return new Dictionary<string, string>();
+        }
+
+        public virtual bool IsColumnText(string columnName)
+        {
+            return false;
         }
     }
 }
